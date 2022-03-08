@@ -1,0 +1,38 @@
+[
+   {
+      "id":1,
+      "nombre":"Adenium obesum",
+      "precio":"5.990",
+      "descripcion":"Semillas de cactus importadas desde alemania"
+   },
+   {
+      "id":2,
+      "nombre":"Echinocactus grusonii",
+      "precio":"5.990",
+      "descripcion":"Semillas de cactus importadas desde alemania"
+   },
+   {
+      "id":3,
+      "nombre":"astrophytum myrostigma",
+      "precio":"5.990",
+      "descripcion":"Semillas de cactus importadas desde alemania"
+   },
+   {
+      "id":4,
+      "nombre":"Lophodora mix",
+      "precio":"5.990",
+      "descripcion":"Semillas de cactus importadas desde alemania"
+   },
+   {
+      "id":5,
+      "nombre":"Lithops mix",
+      "precio":"5.990",
+      "descripcion":"Semillas de cactus importadas desde alemania"
+   },
+   {
+      "id":6,
+      "nombre":"Echinocactus visagna",
+      "precio":"5.990",
+      "descripcion":"Semillas de cactus importadas desde alemania"
+   }
+]

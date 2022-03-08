@@ -1,0 +1,42 @@
+const express = require("express");
+const Contenedor = require("./container/container.js");
+
+const app = express();
+
+const PORT = 8080;
+
+const obj = new Contenedor("./container/productos.data.txt");
+
+let productsArr = obj.getAll();
+
+
+app.get("/", (req, res) => {
+  res.send(
+    "<h1 style='color:orange; text-decoration:underline;' >Bienvenidos al primer servidor de Plantastik</h1>"
+  );
+});
+
+app.get("/productos", (req, res) => {
+  let msg = productsArr;
+
+  res.send(msg);
+
+  console.log(msg);
+});
+
+app.get("/productoRandom", (req, res) => {
+    
+   let num = Math.floor((Math.random() * productsArr.length) + 1)
+
+    let msg = obj.getById(num)
+
+  res.send(msg);
+});
+
+const server = app.listen(PORT, () => {
+  console.log(
+    `Servidor EXPRESS escuchado en el puerto ${server.address().port}`
+  );
+});
+
+server.on("error", (error) => console.log(`Error en servidor ${error}`));
