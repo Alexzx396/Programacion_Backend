@@ -1,7 +1,6 @@
 import { Router } from "express";
 import path from "path";
 import { auth, FBauth } from "../../src/auth/auth.js";
-import { cpus } from "os";
 
 const homeRouter = new Router();
 
@@ -38,7 +37,6 @@ homeRouter.get("/info", (req, res) => {
     processID: process.pid,
     version: process.version,
     memory: process.memoryUsage.rss(),
-    cpus: cpus().length,
   };
   res.render(path.join(process.cwd(), "/views/pages/info.ejs"), {
     data: processData,

@@ -1,13 +1,13 @@
 {
-  "name": "desafio12",
+  "name": "desafio11-1",
   "type": "module",
   "version": "1.0.0",
   "description": "",
   "main": "config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -21,8 +21,7 @@
     "ejs": "^3.1.7",
     "express": "^4.17.3",
     "express-session": "^1.17.2",
-    "knex": "^1.0.5",
-    "mongodb": "^4.5.0",
+    "knex": "^0.95.15",
     "mysql": "^2.18.1",
     "passport": "^0.5.2",
     "passport-facebook": "^3.0.0",

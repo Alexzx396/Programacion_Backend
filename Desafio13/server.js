@@ -1,12 +1,15 @@
 /* MODULOS */
-import "dotenv/config";
 
 import express from "express";
 import session from "express-session";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import mongo from "connect-mongo";
+//import path from "path";
+//import  express-handlebars from " express-handlebars";
 import config from "./config.js";
+
+
 
 import passport from "passport";
 import { Strategy } from "passport-facebook";
@@ -31,13 +34,13 @@ const FacebookStrategy = Strategy;
 
 /* MIDDLEWARES */
 
-//------ Passport ----------
+//------ Passport Facebook----------
 
 passport.use(
   new FacebookStrategy(
     {
-      clientID: process.env.FACEBOOK_APP_ID,
-      clientSecret: process.env.FACEBOOK_APP_SECRET,
+      clientID: config.facebookApp.FACEBOOK_APP_ID,
+      clientSecret: config.facebookApp.FACEBOOK_APP_SECRET,
       callbackURL: "http://localhost:8282/auth/facebook/callback",
       profileFields: ["id", "displayName", "photos", "email"],
     },
@@ -77,13 +80,15 @@ app.use(
   })
 );
 
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
+
+
 
 /* WEBSOCKET */
 
@@ -94,7 +99,7 @@ io.on("connection", async (socket) => {
 });
 
 /* ROUTES */
-//-----Ruta a los productos de Faker.js
+//-----Ruta a los productos de Faker.js...
 app.use(fakerRouter);
 
 //-----Ruta a las vistas del servidor

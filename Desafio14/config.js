@@ -4,13 +4,11 @@ import yargs from "yargs";
 
 const args = yargs(process.argv.slice(2)).default({
   port: 8080,
-  mode: "FORK",
 }).argv;
 
 
 export default {
   PORT: args,
-  MODE: args.mode,
   mongo: {
     client: process.env.MONGO_CLIENT,
     url: process.env.MONGO_URL,
@@ -27,6 +25,12 @@ export default {
   SQLite: {
     client: process.env.SQLITE_CLIENT,
     connection: { filename: path.join(process.cwd(), "/DB/ecommerce.db3") },
-    useNullAsDefault: false,
+    useNullAsDefault: true,
   },
+  
+  facebookApp: {
+    FACEBOOK_APP_ID: "313571780754818",
+    FACEBOOK_APP_SECRET: "4ddd6657d13f40707238a67946594026"
+  }
+
 };

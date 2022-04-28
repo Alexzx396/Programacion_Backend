@@ -8,9 +8,6 @@ import cookieParser from "cookie-parser";
 import mongo from "connect-mongo";
 import config from "./config.js";
 
-import cluster from "cluster";
-import { cpus } from "os";
-
 import passport from "passport";
 import { Strategy } from "passport-facebook";
 
@@ -31,8 +28,6 @@ const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer);
 
 const FacebookStrategy = Strategy;
-
-const numCpus = cpus().length;
 
 /* MIDDLEWARES */
 
@@ -107,41 +102,8 @@ app.use(authRouter);
 app.use(homeRouter);
 
 /* SERVIDOR */
+const server = httpServer.listen(config.PORT, () => {
+  console.log(`Servidor HTTP escuchado en puerto ${server.address().port}`);
+});
 
-switch (config.MODE) {
-  case "CLUSTER":
-    if (cluster.isPrimary) {
-      console.log("CPUs:", numCpus);
-      for (let i = 0; i < numCpus; i++) {
-        cluster.fork();
-      }
-
-      cluster.on("exit", (worker) => {
-        console.log(
-          `Worker ${worker.process.pid} finalizo ${new Date().toLocaleString()}`
-        );
-        cluster.fork();
-      });
-    } else {
-      const server = httpServer.listen(config.PORT, () => {
-        console.log(
-          `Servidor HTTP escuchado en puerto ${server.address().port} - PID ${
-            process.pid
-          } - ${new Date().toLocaleString()}`
-        );
-      });
-      server.on("error", (error) =>
-        console.error(`Error en servidor ${error}`)
-      );
-    }
-
-    break;
-
-  default:
-    const server = httpServer.listen(config.PORT, () => {
-      console.log(`Servidor HTTP escuchado en puerto ${server.address().port}`);
-    });
-
-    server.on("error", (error) => console.error(`Error en servidor ${error}`));
-    break;
-}
+server.on("error", (error) => console.error(`Error en servidor ${error}`));

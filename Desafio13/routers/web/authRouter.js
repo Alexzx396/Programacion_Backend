@@ -32,8 +32,7 @@ authRouter.get("/login", (req, res) => {
 
 authRouter.get("/auth/facebook", passport.authenticate("facebook"));
 
-authRouter.get(
-  "/auth/facebook/callback",
+authRouter.get("/auth/facebook/callback",
   passport.authenticate("facebook", {
     failureRedirect: "/",
     successRedirect: "/home",
