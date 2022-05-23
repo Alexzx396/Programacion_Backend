@@ -1,132 +1,144 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 import config from "../utils/config.js";
 
 const URL = config.mongodb.url;
 
 await mongoose.connect(URL);
 
-
 class ContainerMongoDB {
-    constructor(collectionName, schema) {
-        this.collection = mongoose.model(collectionName, schema)
+  constructor(collectionName, schema) {
+    this.collection = mongoose.model(collectionName, schema);
+  }
+
+  async getAll() {
+    try {
+      const docs = await this.collection.find({});
+      return docs;
+    } catch (error) {
+      console.error(error);
     }
+  }
 
-    async getAll() {
-        try {
-            const docs = await this.collection.find({})
-            console.log(docs);
-            return docs
+  async getById(id) {
+    try {
+      const doc = await this.collection.find({
+        _id: id,
+      });
+      
+      return doc;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
+  async newCart() {
+    try {
+      const newCart = new this.collection();
+      let doc = await newCart.save();
+      console.log(doc.id);
+      return doc.id;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
-        } catch (error) {
-            console.error(error);
+  async save(obj) {
+    try {
+      const newObj = new this.collection(obj);
+      let doc = await newObj.save();
+      console.log(doc);
+      return doc;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async update(obj, id) {
+    try {
+      let result = await this.collection.updateOne(
+        {
+          _id: id,
+        },
+        {
+          $set: {
+            ...obj,
+          },
         }
+      );
+      console.log(result);
+      return result;
+    } catch (error) {
+      console.error(error);
     }
+  }
 
-    async getById(id) {
-        try {
-            const doc = await this.collection.find({
-                _id: id
-            })
-            console.log(doc);
-            return doc
+  async saveToCart(id, id_prod) {
+    try {
+      let findProduct = await products.find({
+        _id: id_prod,
+      });
+      let result = await this.collection.findByIdAndUpdate(id, {
+        $set: {
+          ...findProduct,
+        },
+      });
 
-        } catch (error) {
-            console.error(error)
-        }
+      console.log(result);
+      return result;
+    } catch (error) {
+      console.error(error);
     }
+  }
 
-    async newCart() {
-        try {
-            const newCart = new this.collection()
-            let doc = await newCart.save()
-            console.log(doc.id);
-            return doc.id
-
-        } catch (error) {
-            console.error(error);
-        }
+  async eraseFromCart(id) {
+    try {
+      let result = await this.collection.deleteOne({
+        _id: id,
+      });
+      console.log(result);
+      return result;
+    } catch (error) {
+      console.error(error);
     }
+  }
 
-    async save(obj) {
-        try {
-            const newObj = new this.collection(obj)
-            let doc = await newObj.save()
-            console.log(doc);
-            return doc;
-
-        } catch (error) {
-            console.error(error);
-        }
+  async deleteById(id) {
+    try {
+      let result = await this.collection.deleteOne({
+        _id: id,
+      });
+      console.log(result);
+      return result;
+    } catch (error) {
+      console.error(error);
     }
-
-    async update(obj, id) {
-        try {
-            let result = await this.collection.updateOne({
-                _id: id
-            }, {
-                $set: {
-                    ...obj
-                }
-            })
-            console.log(result);
-            return result
-        } catch (error) {
-            console.error(error);
-        }
-
+  }
+  async findUser(username) {
+    try {
+      const doc = await this.collection.find({
+        username: username,
+      });
+      console.log(doc);
+      return doc;
+    } catch (error) {
+      console.error(error);
     }
+  }
+  async createuser(userData) {
+    try {
+      const { password } = userData;
+      const hash = await bcrypt.hash(password, 10);
 
-    async saveToCart(id, id_prod) {
+      const newUser = new this.collection({ ...userData, password: hash });
 
-        try {
-            let findProduct = await products.find({
-                _id: id_prod
-            })
-            let result = await this.collection.findByIdAndUpdate(id, {
-                $set: {
-                    ...findProduct
-                }
-            })
+      let doc = await newUser.save();
 
-            console.log(result);
-            return result
-
-
-        } catch (error) {
-            console.error(error);
-        }
+      return doc;
+    } catch (error) {
+      console.error(error);
     }
-
-    async eraseFromCart(id) {
-        try {
-            let result = await this.collection.deleteOne({
-                _id: id
-            })
-            console.log(result);
-            return result
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-    async deleteById(id) {
-
-        try {
-            let result = await this.collection.deleteOne({
-                _id: id
-            })
-            console.log(result);
-            return result
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-
-
-
+  }
 }
-
 
 export default ContainerMongoDB;

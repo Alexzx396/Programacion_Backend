@@ -1,32 +1,30 @@
 import ContainerMongoDB from "../../ContainerMongoDB.js";
 
-class ProductDAOMongoDB extends ContainerMongoDB {
+class UsersDAOMongoDB extends ContainerMongoDB {
   constructor() {
-    super("products", {
-      timestamp: {
-        type: Date,
-        default: Date.now,
+    super("users", {
+      username: {
+        type: String,
+        required: true,
+        max: 150,
+      },
+      password: {
+        type: String,
+        required: true
       },
       name: {
         type: String,
         required: true,
         max: 150,
-      },
-      description: {
+      },      
+      address: {
         type: String,
-        required: true,
-        max: 250,
-      },
-      thumbnail: {
-        type: String,
-        required: true,
         max: 400,
       },
-      price: {
+      age: {
         type: Number,
-        required: true,
       },
-      stock: {
+      phone: {
         type: Number,
         required: true,
       },
@@ -34,4 +32,4 @@ class ProductDAOMongoDB extends ContainerMongoDB {
   }
 }
 
-export default ProductDAOMongoDB;
+export default UsersDAOMongoDB;

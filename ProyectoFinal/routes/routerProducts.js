@@ -1,7 +1,10 @@
-import express from "express";
-const routerProducts = express.Router();
-const admin = true;
+import { Router } from "express";
+const routerProducts = new Router();
 
+/* import express from "express";
+const routerProducts = express.Router(); */
+
+const admin = true;
 
 import { DAOProducts } from "../containers/DAO's/imports.js";
 
@@ -32,9 +35,9 @@ routerProducts.post("/", async (req, res) => {
 
 routerProducts.put("/:id", async (req, res) => {
   const product = {
-    name: req.body.name,
+    title: req.body.title,
     description: req.body.description,
-    thumbnail: req.body.thumbnail,
+    pictureUrl: req.body.pictureUrl,
     price: req.body.price,
     stock: req.body.stock,
   };
