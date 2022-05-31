@@ -1,17 +1,13 @@
 import { Router } from "express";
 const routerCart = new Router()
 
-
-/* import express from "express";
-const routerCart = express.Router();
- */
-import { DAOCarts } from "../containers/DAO's/imports.js";
+import { DAOCarts } from "../service/imports.js";
 
 const apiCart = new DAOCarts();
 
 routerCart.get("/", async (req, res) => {
   const response = await apiCart.getAll();
-  res.status(200).send({ msg: "Carritos 1", data: response });
+  res.status(200).send({ msg: "Carritos", data: response });
 });
 routerCart.post("/", async (req, res) => {
   const response = await apiCart.newCart();

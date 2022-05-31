@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import config from "../utils/config.js";
+import logger from "../utils/logger.js"
 
 const URL = config.mongodb.url;
 
@@ -14,9 +15,10 @@ class ContainerMongoDB {
   async getAll() {
     try {
       const docs = await this.collection.find({});
+      logger.info(docs);
       return docs;
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   }
 
@@ -25,10 +27,10 @@ class ContainerMongoDB {
       const doc = await this.collection.find({
         _id: id,
       });
-      
+      logger.info(doc);
       return doc;
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   }
 
@@ -36,10 +38,10 @@ class ContainerMongoDB {
     try {
       const newCart = new this.collection();
       let doc = await newCart.save();
-      console.log(doc.id);
+      logger.info(doc.id);
       return doc.id;
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   }
 
@@ -47,10 +49,10 @@ class ContainerMongoDB {
     try {
       const newObj = new this.collection(obj);
       let doc = await newObj.save();
-      console.log(doc);
+      logger.info(doc);
       return doc;
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   }
 
@@ -66,10 +68,10 @@ class ContainerMongoDB {
           },
         }
       );
-      console.log(result);
+      logger.info(result);
       return result;
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   }
 
@@ -84,10 +86,10 @@ class ContainerMongoDB {
         },
       });
 
-      console.log(result);
+      logger.info(result);
       return result;
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   }
 
@@ -96,10 +98,10 @@ class ContainerMongoDB {
       let result = await this.collection.deleteOne({
         _id: id,
       });
-      console.log(result);
+      logger.info(result);
       return result;
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   }
 
@@ -108,10 +110,10 @@ class ContainerMongoDB {
       let result = await this.collection.deleteOne({
         _id: id,
       });
-      console.log(result);
+      logger.info(result);
       return result;
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   }
   async findUser(username) {
@@ -119,12 +121,13 @@ class ContainerMongoDB {
       const doc = await this.collection.find({
         username: username,
       });
-      console.log(doc);
       return doc;
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   }
+
+
   async createuser(userData) {
     try {
       const { password } = userData;
@@ -136,7 +139,7 @@ class ContainerMongoDB {
 
       return doc;
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   }
 }

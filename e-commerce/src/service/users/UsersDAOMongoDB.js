@@ -1,4 +1,4 @@
-import ContainerMongoDB from "../../ContainerMongoDB.js";
+import ContainerMongoDB from "../../containers/ContainerMongoDB.js";
 
 class UsersDAOMongoDB extends ContainerMongoDB {
   constructor() {
@@ -17,12 +17,12 @@ class UsersDAOMongoDB extends ContainerMongoDB {
         required: true,
         max: 150,
       },      
+      age: {
+        type: Number,
+      },
       address: {
         type: String,
         max: 400,
-      },
-      age: {
-        type: Number,
       },
       phone: {
         type: Number,

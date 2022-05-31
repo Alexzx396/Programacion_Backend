@@ -1,5 +1,6 @@
 import admin from "firebase-admin";
 import config from "../utils/config.js";
+import logger from "../utils/logger.js";
 
 const serviceAccount = config.firebase.route;
 
@@ -66,9 +67,9 @@ class ContainerFirebase {
       await doc.create({
         ...obj,
       });
-      console.log("Datos insertados");
+      logger.info("Datos insertados");
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   }
 
@@ -100,6 +101,7 @@ class ContainerFirebase {
       let item = await doc.update({
         ...obj,
       });
+      logger.info("Se actualizo el siguiente elemento", item);
       console.log("Se actualizo el siguiente elemento", item);
       return item;
     } catch (error) {
@@ -113,7 +115,7 @@ class ContainerFirebase {
       const query = db.collection(this.collection);
       const doc = query.doc(`${id}`);
       const item = doc.delete();
-      console.log("Se ha eliminado el siguiente elemento", item);
+      logger.info("Se ha eliminado el siguiente elemento", item);
       return item;
     } catch (error) {
       console.error(error);

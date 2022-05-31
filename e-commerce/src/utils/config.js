@@ -2,7 +2,7 @@ import yargs from "yargs";
 
 const args = yargs(process.argv.slice(2)).default({
   port: 8080,
-  mode: "CLUSTER",
+  mode: "CLUSTER",  
 }).argv;
 
 export default {
