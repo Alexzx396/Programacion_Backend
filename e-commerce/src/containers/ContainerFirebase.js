@@ -26,7 +26,7 @@ class ContainerFirebase {
       }));
       return response;
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   }
 
@@ -39,7 +39,7 @@ class ContainerFirebase {
       const response = item.data();
       return response;
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   }
 
@@ -52,10 +52,10 @@ class ContainerFirebase {
         timestamp: new Date(),
         products: [],
       });
-      console.log("Carrito creado", doc.id);
+      logger.info("Carrito creado", doc.id);
       return doc.id;
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   }
 
@@ -87,9 +87,9 @@ class ContainerFirebase {
       await doc.update({
         products: admin.firestore.FieldValue.arrayUnion({ ...prod }),
       });
-      console.log("Producto agregado", item);
+      logger.info("Producto agregado", item);
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   }
 
@@ -101,11 +101,10 @@ class ContainerFirebase {
       let item = await doc.update({
         ...obj,
       });
-      logger.info("Se actualizo el siguiente elemento", item);
-      console.log("Se actualizo el siguiente elemento", item);
+      logger.info("Se actualizo el siguiente elemento", doc);
       return item;
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   }
 
@@ -115,10 +114,10 @@ class ContainerFirebase {
       const query = db.collection(this.collection);
       const doc = query.doc(`${id}`);
       const item = doc.delete();
-      logger.info("Se ha eliminado el siguiente elemento", item);
+      logger.info("Se ha eliminado el siguiente elemento", doc);
       return item;
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   }
 }

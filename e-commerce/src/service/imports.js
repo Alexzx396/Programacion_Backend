@@ -13,19 +13,19 @@ switch (process.env.DBTYPE) {
   case "Mongo":
     DAOProducts = ProductDAOMongoDB;
     DAOCarts = CartDAOMongoDB;
-  break;
-  
+    break;
+
   case "Firebase":
     DAOProducts = ProductDAOFirebase;
     DAOCarts = CartDAOFirebase;
-    
-  break;
+
+    break;
   default:
     DAOProducts = ProductDAOMongoDB;
     DAOCarts = CartDAOMongoDB;
-    
-  break;
-    
+
+    break;
+
 }
 
-export { DAOProducts, DAOCarts};
+export { DAOProducts, DAOCarts };
