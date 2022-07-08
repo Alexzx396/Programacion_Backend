@@ -1,0 +1,62 @@
+{
+  "name": "desafio22.2",
+  "module": "import",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "babel src --out-dir build",
+    "dev": "nodemon --exec ./node_modules/.bin/babel-node src/index.js",
+    "start": "node build/index.js",
+    "test": "mocha tests/TDD/index.test.js",
+    "test-manually": "node tests/HTTP/index.test.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/runtime": "^7.18.6",
+    "@koa/cors": "^3.3.0",
+    "@koa/multer": "^3.0.0",
+    "axios": "^0.27.2",
+    "bcryptjs": "^2.4.3",
+    "compression": "^1.7.4",
+    "connect-mongo": "^4.6.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "express-session": "^1.17.3",
+    "koa": "^2.13.4",
+    "koa-body": "^5.0.0",
+    "koa-mongo": "^1.9.3",
+    "koa-morgan": "^1.0.1",
+    "koa-passport": "^4.1.4",
+    "koa-router": "^11.0.1",
+    "koa-session": "^6.2.0",
+    "koa-static": "^5.0.0",
+    "koa-views": "^8.0.0",
+    "mongoose": "^6.4.3",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.7.7",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "twilio": "^3.78.0",
+    "winston": "^3.8.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.18.6",
+    "@babel/core": "^7.18.6",
+    "@babel/node": "^7.18.6",
+    "@babel/plugin-transform-runtime": "^7.18.6",
+    "@babel/preset-env": "^7.18.6",
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0",
+    "nodemon": "^2.0.19",
+    "supertest": "^6.2.4"
+  }
+}
