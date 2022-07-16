@@ -1,3 +1,29 @@
+import yargs from "yargs";
+
+const args = yargs(process.argv.slice(2)).default({
+  port: 8080,
+  mode: "CLUSTER",
+}).argv;
+
+
+export default {
+  PORT: args,
+  MODE: args.mode,
+  mongodb: {
+    url: process.env.MONGO_URL,
+  },
+  firebase: {
+    route:
+      "./db/ecommerce-backend-43c06-firebase-adminsdk-54ok2-723cd01a3b.json",
+  },
+};
+ 
+
+
+// url: "mongodb+srv://ecommerce:123@cluster0.gmbcf.mongodb.net/e-commerce",
+
+
+
 // import dotenv from "dotenv";
 // import path from "path";
 
@@ -35,40 +61,42 @@
 // url: "mongodb+srv://ecommerce:123@cluster0.gmbcf.mongodb.net/e-commerce",
 
 
-import yargs from "yargs";
-import dotenv from "dotenv";
-import path from "path";
+// import yargs from "yargs";
+// import dotenv from "dotenv";
+// import path from "path";
 
 
-dotenv.config({
-  path: path.resolve(process.cwd(), process.env.NODE_ENV + ".env"),
-});
+// dotenv.config({
+//   path: path.resolve(process.cwd(), process.env.NODE_ENV + ".env"),
+// });
 
 
-const args = yargs(process.argv.slice(2)).default({
-  port: 8080,
-  mode: "CLUSTER",
-}).argv;
+// const args = yargs(process.argv.slice(2)).default({
+//   port: 8080,
+//   mode: "CLUSTER",
+// }).argv;
 
-export default {
-  PORT: args,
-  MODE: args.mode,
-  mongodb: {
-    url: process.env.MONGO_URL,
-  },
-  fileDB: {
-        path: "./DB"
-      },
-  firebase: {
-    route:
-    "./db/ecommerce-backend-43c06-firebase-adminsdk-54ok2-723cd01a3b.json",
-  },
-  srv: {
-        NODE_ENV: process.env.NODE_ENV || "development",
-        PORT: process.env.PORT || 8080,
-        MODE: process.env.MODE || "CLUSTER",
-        PERSISTENCE: process.env.PERSISTENCE || "MEM",
-        LOG: process.env.LOG || "DEV"
-      },
-};
+// export default {
+//   PORT: args,
+//   MODE: args.mode,
+//   mongodb: {
+//     url: process.env.MONGO_URL,
+//   },
+//   fileDB: {
+//         path: "./DB"
+//       },
+//   firebase: {
+//     route:
+//     "./db/ecommerce-backend-43c06-firebase-adminsdk-54ok2-723cd01a3b.json",
+//   },
+//   srv: {
+//         NODE_ENV: process.env.NODE_ENV || "development",
+//         PORT: process.env.PORT || 8080,
+//         MODE: process.env.MODE || "CLUSTER",
+//         PERSISTENCE: process.env.PERSISTENCE || "MEM",
+//         LOG: process.env.LOG || "DEV"
+//       },
+// };
+
+
 

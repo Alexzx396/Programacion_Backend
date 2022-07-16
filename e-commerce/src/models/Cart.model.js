@@ -1,15 +1,15 @@
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
 
-const CartSchema = mongoose.Schema({
-  timestamp: {
-    type: Date,
-    default: Date.now,
-  },
-  products: {
-    type: Array,
-  },
-});
+// const CartSchema = mongoose.Schema({
+//   timestamp: {
+//     type: Date,
+//     default: Date.now,
+//   },
+//   products: {
+//     type: Array,
+//   },
+// });
 
-const CartModel = mongoose.model("carts", CartSchema);
+// const CartModel = mongoose.model("carts", CartSchema);
 
-export default CartModel;
+// export default CartModel;

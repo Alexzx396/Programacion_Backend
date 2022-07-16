@@ -29,30 +29,24 @@ const Users = new UsersDAOMongoDB();
 const routerAuth = new Router();
 const numCpus = cpus().length;
 
-
 /* INSTANCIACION */
 const app = express();
 
 /* MIDDLEWARES */
 
 // ==== Motor de Plantillas ====
-
 app.set("view engine", "ejs");
 
-
 // ==== gzip ====
-
 app.use(compression());
 
 app.use(morgan("tiny"));
-
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-// ==== Passport Local ====
-
+// ==== PASSPORT LOCAL ====
 
 let strategy = new LocalStrategy(async (username, password, done) => {
   let user;
@@ -74,7 +68,6 @@ let strategy = new LocalStrategy(async (username, password, done) => {
 
 passport.use(strategy);
 
-
 // ==== Mongo Atlas Session ====
 
 const MongoStore = connectMongo.create({
@@ -91,7 +84,6 @@ app.use(
     cookie: { maxAge: 60000 },
   })
 );
-
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -109,8 +101,6 @@ passport.deserializeUser(async (username, done) => {
     done(error);
   }
 });
-
-
 
 /* RUTAS */
 
@@ -167,7 +157,6 @@ routerAuth.post("/register", upload.single("avatar"), async (req, res) => {
 });
 
 // ==== LOGOUT CON SESSION ====
-
 routerAuth.get("/logout", (req, res) => {
   const username = req.session.username;
   if (username) {
@@ -185,16 +174,12 @@ routerAuth.get("/logout", (req, res) => {
   }
 });
 
-
 routerProducts.use(bodyParser.json());
 routerCart.use(bodyParser.json());
 routerAuth.use(bodyParser.json());
 routerHome.use(bodyParser.json());
 
-
-
 /* RUTAS */
-
 app.use("/", routerAuth);
 app.use("/home/", routerHome);
 app.use("/api/productos/", routerProducts);
@@ -207,8 +192,6 @@ app.get("/*", (req, res) => {
 });
 
 /* SERVIDOR */
-
-const PORT = config.srv.PORT;
 
 switch (config.MODE) {
   case "CLUSTER":
@@ -227,7 +210,8 @@ switch (config.MODE) {
     } else {
       const server = app.listen(config.PORT, () => {
         logger.info(
-          `Servidor express escuchado en puerto ${server.address().port
+          `Servidor express escuchado en puerto ${
+            server.address().port
           } - PID ${process.pid} - ${new Date().toLocaleString()}`
         );
       });
@@ -246,4 +230,3 @@ switch (config.MODE) {
     server.on("error", (error) => logger.error(`Error en servidor ${error}`));
     break;
 }
-
