@@ -6,11 +6,11 @@ log4js.configure({
     console: { type: "console" },
     warnings: {
       type: "file",
-      filename: path.join(process.cwd(), "../logs/warn.log"),
+      filename: path.join(process.cwd(), "/logs/warn.log"),
     },
     errors: {
       type: "file",
-      filename: path.join(process.cwd(), "../logs/error.log"),
+      filename: path.join(process.cwd(), "/logs/error.log"),
     },
     loggerConsole: {
       type: "logLevelFilter",

@@ -1,129 +1,141 @@
 import CustomError from "../../classes/CustomError.class.js";
 import DAO from "../../classes/DAO.class.js";
 import logger from "../../utils/logger.js";
+import MongoAtlasClient from "../../classes/MongoAtlasClient.class.js";
+import CartModel from "../../models/Cart.model.js";
+import ProductsModel from "../../models/Product.model.js";
 
-class CartDAOMem extends DAO {
+class CartDAOMongo extends DAO {
   constructor() {
     super();
-    this.collection = [];
+    this.collection = CartModel;
+    this.connection = new MongoAtlasClient();
   }
 
-  getAll() {
+  async getAll() {
     let docs = [];
     try {
-      docs = this.collection;
+      await this.connection.connect();
+      docs = await this.collection.find({});
+      logger.info(docs);
       return docs;
     } catch (error) {
       const err = new CustomError(500, "Error getting all carts", error);
       logger.error(err);
       throw err;
     } finally {
+      this.connection.disconnect();
       logger.info(`Carts found: ${docs.length}`);
     }
   }
 
-  getById(id) {
+  async getById(id) {
     let doc = null;
 
     try {
-      doc = this.collection.find((doc) => {
-        return doc.id === id;
-      });
+      await this.connection.connect();
+      doc = await this.collection.find({ _id: id });
+      logger.info(doc);
       return doc;
     } catch (error) {
       const err = new CustomError(500, "Error getting cart", error);
       logger.error(err);
       throw err;
     } finally {
+      this.connection.disconnect();
       logger.info(`Cart found: ${JSON.stringify(doc)}`);
     }
   }
 
-  save() {
-    let doc = null;
+  async save() {
     try {
-      let newId;
-      if (this.collection.length == 0) {
-        newId = 1;
-      } else {
-        newId = this.collection[this.collection.length - 1].id + 1;
-      }
-      doc = { id: newId, products: [] };
-      this.collection.push(doc);
-      return doc;
+      await this.connection.connect();
+      const newCart = new this.collection();
+      let doc = await newCart.save();
+      logger.info(doc.id);
+      return doc.id;
     } catch (error) {
-      const err = new CustomError(500, "Error saving new cart", error);
-      logger.error(err);
-      throw err;
+      return new CustomError(500, "Error saving new cart", error);
     } finally {
-      logger.info(`New cart saved successfully: ${JSON.stringify(doc)}`);
+      this.connection.disconnect();
+      logger.info(`New cart saved successfully: cartId # ${doc.id}`);
     }
   }
 
-  update(obj) {
+  async update(id, prod) {
     let doc = null;
     try {
-      const index = this.collection.findIndex((cart) => cart.id === obj.id);
-      if (index == -1) {
-        doc = { code: 401, msg: "ID not found" };
-      } else {
-        this.collection[index] = obj;
-        doc = this.collection[index];
-      }
+      await this.connection.connect();
+      doc = await this.collection.findByIdAndUpdate(
+        id,
+        {
+          $set: prod,
+        },
+        { new: true }
+      );
+      logger.info(doc);
       return doc;
     } catch (error) {
       const err = new CustomError(500, "Error updating cart", error);
       logger.error(err);
       throw err;
     } finally {
+      this.connection.disconnect();
       logger.info(`Cart updated: ${JSON.stringify(doc)}`);
     }
   }
-  deleteCartID(id) {
+
+  async deleteById(id) {
     let doc = null;
     try {
-      const index = this.collection.findIndex((cart) => cart.id == id);
-      if (id == -1) {
-        doc = { code: 401, msg: "ID not found" };
-      } else {
-        doc = this.collection.splice(index, 1);
-      }
+      await this.connection.connect();
+      doc = await this.collection.findByIdAndDelete(id);
+      logger.info(doc);
       return doc;
     } catch (error) {
       const err = new CustomError(500, "Error deleting cart", error);
       logger.error(err);
       throw err;
     } finally {
+      this.connection.disconnect();
       logger.info(`Cart deleted: ${JSON.stringify(doc)}`);
     }
   }
 
-  deleteById(id, id_prod) {
-    let doc = null;
+  async saveToCart(id, id_prod) {
     try {
-      const index = this.collection.findIndex((cart) => cart.id === id);
-      if (index == -1) {
-        doc = { code: 401, msg: "ID not found" };
-      } else {
-        const indexProd = this.collection[index].findIndex(
-          (prod) => prod.id === id_prod
-        );
-        if (indexProd == -1) {
-          doc = { code: 401, msg: "ID not found" };
-        } else {
-          doc = this.collection[index].splice(indexProd, 1);
-        }
-      }
-      return doc;
+      await this.connection.connect();
+      let findProduct = await ProductsModel.find({ _id: id_prod });
+      let filter = {_id: id}
+
+      let result = await this.collection.findByIdAndUpdate(filter, {
+        $push: {products: findProduct },
+      });
+      logger.info(result);
+      return result;
     } catch (error) {
-      const err = new CustomError(500, "Error deleting product", error);
+      const err = new CustomError(500, "Error saving product to cart", error);
       logger.error(err);
       throw err;
     } finally {
       this.connection.disconnect();
-      logger.info(`Product deleted: ${JSON.stringify(doc)}`);
+      logger.info(`Product saved to cart: ${JSON.stringify(findProduct)}`);
+    }
+  }
+  async eraseFromCart(id, id_prod) {
+    try {
+      await this.connection.connect();
+      let findCart = await this.collection.findById(id);
+      let result = await findCart.remove({products: id_prod});
+      logger.info(result);
+      return result;
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      this.connection.disconnect();
+      logger.info(`Product erased from cart: ${JSON.stringify(result)}`);
     }
   }
 }
 
-export default CartDAOMem;
+export default CartDAOMongo;
