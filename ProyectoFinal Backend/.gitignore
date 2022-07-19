@@ -1,5 +1,6 @@
-### Linux ###
-*~
+### e-commerce ###
+/node_modules
+.env
 
 # temporary files which can be created if a process still has a handle open of a deleted file
 .fuse_hidden*
@@ -118,6 +119,8 @@ web_modules/
 .env
 .env.test
 .env.production
+production.env
+development.env
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -195,7 +198,6 @@ $RECYCLE.BIN/
 package-lock.json
 
 # Files persist
-
 products.file
 carts.file
 users.file
