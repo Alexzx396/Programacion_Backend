@@ -27,9 +27,18 @@ Este eCommerce fue desarrollado para el curso de CoderHouse con el nombre **Prog
   * 😊 JsonWebToken
   * 😊 mongoose
   * 😊 cluster
-
-
-
+  * 😊 axios
+  * 😊 chai
+  * 😊 express-handlebars
+  * 😊 express-session
+  * 😊 fs
+  * 😊 got
+  * 😊 mocha
+  * 😊 multer
+  * 😊 nodemailer
+  * 😊 socket.io
+  * 😊 winston
+  * 😊 twilio
 
 
 
