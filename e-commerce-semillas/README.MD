@@ -1,4 +1,4 @@
-# 🏪 eCommerce 🏪
+# 🏪 E-commerce Semillas 🏪
 Este eCommerce fue desarrollado para el curso de CoderHouse con el nombre **Programación Backend** El mismo cumplirá con los fixtures pedidos para la aprobación del curso.
 ---
 ## 👨‍💻 Datos del Creador 👨‍💻
