@@ -28,6 +28,7 @@ const LocalStrategy = Strategy;
 const Users = new UsersDAOMongoDB();
 const routerAuth = new Router();
 const numCpus = cpus().length;
+ 
 
 /* INSTANCIACION */
 const app = express();
