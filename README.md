@@ -32,4 +32,4 @@ Desafíos - Desarrollo Backend Coder houser -  Desarrollar aplicaciones modernas
 
 
 --> Certificacion Backend 
-<img src="../Programacion_Backend/backend.png" alt="certificado"/>
+<a href="https://www.coderhouse.cl/certificados/62e7055ed56d700024002e40">
