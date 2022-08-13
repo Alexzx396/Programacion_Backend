@@ -27,7 +27,7 @@ Desafíos - Desarrollo Backend Coder houser -  Desarrollar aplicaciones modernas
 | `Desafio 19`  | Reformar para usar GraphQL              |
 | `Desafio 20`  | Reformar para usar otro framework       |
 | `Desafio 21`  | Servidor en Deno                        |
-| ------------- | --------------------------------------- |
+
 
 
 --> Certificacion Backend 
